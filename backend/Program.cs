@@ -18,8 +18,11 @@ builder.Services.AddCors(options =>
     });
 });
 
+var connString = builder.Configuration.GetConnectionString("PostgresConnection")
+                  ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
+    options.UseNpgsql(connString));
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -31,6 +34,12 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
 #region Middleware Pipeline
 
 if (app.Environment.IsDevelopment())
@@ -40,7 +49,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAll");
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseRouting();
 
 // app.UseAuthorization();
