@@ -16,7 +16,12 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("ping")]
-    public IActionResult Ping() => Ok("pong");
+    public IActionResult Ping()
+    {
+        var msg = "pong ";
+        var times = new Random().Next(1,6);
+        return Ok(new { message = string.Concat(Enumerable.Repeat(msg, times)) });
+    }
 
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] User user)
