@@ -1,4 +1,9 @@
 [build]
   base = "frontend"
   command = "npm run build:prod"
-  publish = "dist/frontend"
+  publish = "dist/frontend/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
