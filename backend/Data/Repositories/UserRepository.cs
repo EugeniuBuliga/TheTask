@@ -2,7 +2,7 @@ using Backend.Models;
 using Backend.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Repositories;
+namespace Backend.Data.Repositories;
 
 public class UserRepository(AppDbContext context) : IUserRepository
 {

@@ -1,5 +1,5 @@
 using Backend.Data;
-using Backend.Repositories;
+using Backend.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -29,6 +29,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ItemRepository, ItemRepository>();
 
 // Controllers
 builder.Services.AddControllers();
