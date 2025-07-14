@@ -6,14 +6,9 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserController : ControllerBase
+public class UserController(IUserRepository repo) : ControllerBase
 {
-    private readonly IUserRepository _userRepository;
-
-    public UserController(IUserRepository repo)
-    {
-        _userRepository = repo;
-    }
+    private readonly IUserRepository _userRepository = repo;
 
     [HttpGet("ping")]
     public IActionResult Ping()
@@ -26,14 +21,14 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] User user)
     {
-        var created = await _userRepository.CreateUserAsync(user);
+        var created = await _userRepository.CreateUser(user);
         return Ok(created);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetUsers()
     {
-        var users = await _userRepository.GetUsersAsync();
+        var users = await _userRepository.GetUsers();
         return Ok(users);
     }
 }

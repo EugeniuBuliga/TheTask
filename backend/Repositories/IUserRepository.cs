@@ -4,6 +4,7 @@ namespace Backend.Repositories;
 
 public interface IUserRepository
 {
-    Task<IList<User>> GetUsersAsync();
-    Task<User> CreateUserAsync(User user);
+    Task<IList<User>> GetUsers();
+    Task<User?> GetUser(string username);
+    Task<User> CreateUser(User user);
 }

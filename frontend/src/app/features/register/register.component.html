@@ -1,0 +1,19 @@
+<p>register works!</p>
+<form [formGroup]="form" (submit)="register()">
+  <div>
+    <label for="username">Username</label>
+    <input id="username" formControlName="username" />
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input id="password" type="password" formControlName="password" />
+  </div>
+
+  <button type="submit">Register</button>
+
+  @if (error){
+    <p style="color: red;">{{ error }}</p>
+  }
+
+</form>
