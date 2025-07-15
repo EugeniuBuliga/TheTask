@@ -1,9 +1,9 @@
 import {Routes} from '@angular/router';
-import {AuthGuard} from './features/auth/auth.guard';
+import {AuthGuard} from './core/auth/auth.guard';
 import {PingComponent} from './features/ping/ping.component';
-import {LoginComponent} from './features/login/login.component';
-import {LoginGuard} from './features/login/login.guard';
-import {RegisterComponent} from './features/register/register.component';
+import {Login} from './core/auth/pages/login/login';
+import {LoginGuard} from './core/auth/pages/login/login.guard';
+import {Register} from './core/auth/pages/register/register';
 
 export const routes: Routes = [
   {
@@ -18,12 +18,12 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterComponent,
+    component: Register,
     canActivate: [LoginGuard]
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: Login,
     canActivate: [LoginGuard],
   },
   {
