@@ -6,13 +6,14 @@ import {environment} from '../../../environments/environment';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatButton} from '@angular/material/button';
 import {MatFormField, MatInput} from '@angular/material/input';
+import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 
 type TodoItem = { id: number; description: string };
 
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinner, MatFormField, MatButton, MatInput],
+  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinner, MatFormField, MatButton, MatInput, CdkTextareaAutosize],
   templateUrl: './todo-list.html',
   styleUrls: ['./todo-list.scss']
 })

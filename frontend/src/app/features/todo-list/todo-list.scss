@@ -44,6 +44,9 @@
 .todo-text {
   font-size: 16px;
   flex: 1;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .button-group {

@@ -2,7 +2,15 @@
 
 <form [formGroup]="form" (ngSubmit)="submit()" class="todo-form">
   <mat-form-field class="full-width">
-    <input matInput formControlName="description" placeholder="What do you need to do?" />
+    <textarea
+      matInput
+      formControlName="description"
+      placeholder="What do you need to do?"
+      rows="2"
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="2"
+      cdkAutosizeMaxRows="5">
+  </textarea>
   </mat-form-field>
 
   <div class="button-row">
