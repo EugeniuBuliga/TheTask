@@ -1,0 +1,45 @@
+<h2>My Todos</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <input formControlName="description" placeholder="What do you need to do?" />
+  <button
+    type="submit"
+    [disabled]="form.invalid || loading()">
+    {{ isEditing ? 'Update' : 'Add' }}
+  </button>
+
+  @if (isEditing) {
+    <button
+      type="button"
+      (click)="cancelEdit()"
+      [disabled]="loading()">
+      Cancel
+    </button>
+  }
+</form>
+
+@if(loading()){
+  <div>Loading...</div>
+  <mat-spinner class="custom-spinner" diameter="40"></mat-spinner>
+}
+
+<ul>
+  @for (todo of todos(); track todo.id) {
+    <li>
+      {{ todo.description }}
+
+      @if (pendingDeleteId() === todo.id) {
+        <button (click)="confirmDelete(todo.id)" [disabled]="loading()">Confirm</button>
+        <button (click)="cancelDelete()" [disabled]="loading()">Cancel</button>
+      } @else {
+        <button (click)="edit(todo)">Edit</button>
+        <button (click)="delete(todo.id)" [disabled]="loading()">Delete</button>
+      }
+    </li>
+  }
+</ul>
+
+
+@if (error()) {
+  <p class="error-msg">{{ error() }}</p>
+}

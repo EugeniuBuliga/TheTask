@@ -4,16 +4,17 @@ import {PingComponent} from './features/ping/ping.component';
 import {Login} from './core/auth/pages/login/login';
 import {LoginGuard} from './core/auth/pages/login/login.guard';
 import {Register} from './core/auth/pages/register/register';
+import {TodoList} from './features/todo-list/todo-list';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'ping',
+    redirectTo: 'main',
     pathMatch: 'full',
   },
   {
-    path: 'ping',
-    component: PingComponent,
+    path: 'main',
+    component: TodoList,
     canActivate: [AuthGuard],
   },
   {
