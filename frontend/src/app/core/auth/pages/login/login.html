@@ -30,4 +30,8 @@
       {{ error }}
     </mat-error>
   }
+
+  @if (loading){
+    <mat-spinner class="custom-spinner" diameter="69"></mat-spinner>
+  }
 </form>

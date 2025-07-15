@@ -11,6 +11,7 @@ import { AuthService } from '../../auth.service';
 import { CommonModule } from '@angular/common';
 import { MatFormField, MatLabel, MatInput, MatError } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-register',
@@ -24,12 +25,14 @@ import { MatButton } from '@angular/material/button';
     MatLabel,
     MatInput,
     MatError,
-    MatButton
+    MatButton,
+    MatProgressSpinner
   ]
 })
 export class Register {
   error = '';
   form: FormGroup;
+  loading = false;
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.form = this.fb.group({
@@ -43,17 +46,19 @@ export class Register {
       this.form.markAllAsTouched();
       return;
     }
+    this.loading = true;
 
     const { username, password } = this.form.value;
 
     this.auth.register(username!, password!).subscribe({
       next: (res) => {
-        console.log('Registration response:', res);
+        this.loading = false;
         this.error = '';
         this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Registration error:', err);
+        this.loading = false;
         this.error = 'Registration failed';
       }
     });

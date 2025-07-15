@@ -5,17 +5,19 @@ import { AuthService } from '../../auth.service';
 import { CommonModule } from '@angular/common';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.html',
   styleUrls: ['./login.scss'],
-  imports: [ReactiveFormsModule, CommonModule, MatFormField, MatLabel, MatError, MatInput, MatButton],
+  imports: [ReactiveFormsModule, CommonModule, MatFormField, MatLabel, MatError, MatInput, MatButton, MatProgressSpinner],
 })
 export class Login {
   error = '';
   form: FormGroup;
+  loading = false;
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.form = this.fb.group({
@@ -30,11 +32,19 @@ export class Login {
       return;
     }
 
+    this.loading = true;
+
     const { username, password } = this.form.value;
 
     this.auth.login(username!, password!).subscribe({
-      next: () => this.router.navigate(['/ping']),
-      error: () => (this.error = 'Invalid credentials'),
+      next: () => {
+        this.loading = false;
+        this.router.navigate(['/ping']);
+      },
+      error: () => {
+        this.loading = false;
+        return (this.error = 'Invalid credentials');
+      },
     });
   }
 
