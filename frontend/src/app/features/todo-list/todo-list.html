@@ -1,44 +1,80 @@
-<h2>My Todos</h2>
+<h2 class="section-title">My Todos</h2>
 
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <input formControlName="description" placeholder="What do you need to do?" />
-  <button
-    type="submit"
-    [disabled]="form.invalid || loading()">
-    {{ isEditing ? 'Update' : 'Add' }}
-  </button>
+<form [formGroup]="form" (ngSubmit)="submit()" class="todo-form">
+  <mat-form-field class="full-width">
+    <input matInput formControlName="description" placeholder="What do you need to do?" />
+  </mat-form-field>
 
-  @if (isEditing) {
+  <div class="button-row">
     <button
-      type="button"
-      (click)="cancelEdit()"
-      [disabled]="loading()">
-      Cancel
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid || loading()">
+      {{ isEditing ? 'Update' : 'Add' }}
     </button>
-  }
+
+    @if (isEditing) {
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="cancelEdit()"
+        [disabled]="loading()"
+        color="accent">
+        Cancel
+      </button>
+    }
+  </div>
 </form>
 
-@if(loading()){
-  <div>Loading...</div>
-  <mat-spinner class="custom-spinner" diameter="40"></mat-spinner>
+@if (loading()) {
+  <div class="loading-wrapper">
+    <mat-spinner diameter="40" class="custom-spinner"></mat-spinner>
+    <span>Loading...</span>
+  </div>
 }
 
-<ul>
+<ul class="todo-list">
   @for (todo of todos(); track todo.id) {
-    <li>
-      {{ todo.description }}
+    <li class="todo-item">
+      <span class="todo-text">{{ todo.description }}</span>
 
       @if (pendingDeleteId() === todo.id) {
-        <button (click)="confirmDelete(todo.id)" [disabled]="loading()">Confirm</button>
-        <button (click)="cancelDelete()" [disabled]="loading()">Cancel</button>
+        <div class="button-group">
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="confirmDelete(todo.id)"
+            [disabled]="loading()">
+            Confirm
+          </button>
+          <button
+            mat-stroked-button
+            (click)="cancelDelete()"
+            [disabled]="loading()">
+            Cancel
+          </button>
+        </div>
       } @else {
-        <button (click)="edit(todo)">Edit</button>
-        <button (click)="delete(todo.id)" [disabled]="loading()">Delete</button>
+        <div class="button-group">
+          <button
+            mat-stroked-button
+            color="accent"
+            (click)="edit(todo)">
+            Edit
+          </button>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="delete(todo.id)"
+            [disabled]="loading()">
+            Delete
+          </button>
+        </div>
       }
     </li>
   }
 </ul>
-
 
 @if (error()) {
   <p class="error-msg">{{ error() }}</p>

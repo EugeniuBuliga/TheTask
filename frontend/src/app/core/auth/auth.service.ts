@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import {environment} from '../../../environments/environment';
+import {Router} from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -11,7 +12,7 @@ export class AuthService {
   readonly isLoggedIn = signal<boolean>(!!localStorage.getItem('token'));
   readonly user = signal<{ name: string } | null>(null);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     const token = localStorage.getItem('token');
     if (token) {
       this.isLoggedIn.set(true);
@@ -40,6 +41,8 @@ export class AuthService {
     localStorage.removeItem('token');
     this.isLoggedIn.set(false);
     this.user.set(null);
+
+    this.router.navigate(['/login']);
   }
 
   getToken(): string | null {

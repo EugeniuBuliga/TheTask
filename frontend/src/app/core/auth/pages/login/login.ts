@@ -39,7 +39,7 @@ export class Login {
     this.auth.login(username!, password!).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/ping']);
+        this.router.navigate(['/main']);
       },
       error: () => {
         this.loading = false;

@@ -4,13 +4,15 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatButton} from '@angular/material/button';
+import {MatFormField, MatInput} from '@angular/material/input';
 
 type TodoItem = { id: number; description: string };
 
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinner],
+  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinner, MatFormField, MatButton, MatInput],
   templateUrl: './todo-list.html',
   styleUrls: ['./todo-list.scss']
 })
