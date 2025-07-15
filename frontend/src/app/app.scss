@@ -1,8 +1,11 @@
-.site-wrapper {
+.app-body{
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
   flex-direction: column;
-  height: 100%;
+  height:100%;
+  padding: 0;
+  margin: 0;
+}
+
+.app-main-router{
+  padding: 100px;
 }

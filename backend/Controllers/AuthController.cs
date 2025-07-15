@@ -1,5 +1,6 @@
 using Backend.Data.Repositories;
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,7 +22,7 @@ public class AuthController(IConfiguration config, IUserRepository repo) : Contr
         var hash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
         var user = new User { Username = dto.Username, PasswordHash = hash };
         await _userRepository.CreateUser(user);
-        return Ok("User registered");
+        return Ok(new AuthResponseDto { Name = dto.Username });
     }
 
     [HttpPost("login")]
@@ -32,7 +33,8 @@ public class AuthController(IConfiguration config, IUserRepository repo) : Contr
             return Unauthorized("Invalid credentials");
 
         var token = GenerateJwt(user);
-        return Ok(new AuthResponseDto { Token = token });
+        return Ok(new AuthResponseDto { Token = token , Name = dto.Username });
+
     }
 
     private string GenerateJwt(User user)
@@ -41,13 +43,28 @@ public class AuthController(IConfiguration config, IUserRepository repo) : Contr
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+        var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username)
+            };
+
         var token = new JwtSecurityToken(
             issuer: jwtSettings["Issuer"],
             audience: jwtSettings["Audience"],
             expires: DateTime.Now.AddMinutes(int.Parse(jwtSettings["ExpiresInMinutes"])),
-            claims: [new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())],
+             claims: claims,
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
+    [Authorize]
+    [HttpGet("me")]
+    public IActionResult Me()
+    {
+        var username = User.FindFirst(ClaimTypes.Name)?.Value;
+        return Ok(new AuthResponseDto { Name = username });
+    }
+
 }

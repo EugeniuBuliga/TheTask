@@ -1,19 +1,33 @@
-<p>register works!</p>
-<form [formGroup]="form" (submit)="register()">
-  <div>
-    <label for="username">Username</label>
-    <input id="username" formControlName="username" />
-  </div>
+<form [formGroup]="form" (submit)="register()" class="form-wrapper">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Username</mat-label>
+    <input matInput formControlName="username" required />
 
-  <div>
-    <label for="password">Password</label>
-    <input id="password" type="password" formControlName="password" />
-  </div>
+    @if (username.hasError('required') && username?.touched) {
+      <mat-error>Username is required</mat-error>
+    }
+  </mat-form-field>
 
-  <button type="submit">Register</button>
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" formControlName="password" required />
 
-  @if (error){
-    <p style="color: red;">{{ error }}</p>
+    @if (password.hasError('required') && password.touched) {
+      <mat-error>Password is required</mat-error>
+    }
+
+    @if (password.hasError('minlength') && password.touched) {
+      <mat-error>Password must be at least 6 characters</mat-error>
+    }
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" class="w-full" type="submit">
+    Register
+  </button>
+
+  @if (error) {
+    <mat-error class="text-center">
+      {{ error }}
+    </mat-error>
   }
-
 </form>

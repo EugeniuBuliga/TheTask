@@ -1,0 +1,20 @@
+<div class="nav-body">
+  <ul>
+    @if (isLoggedIn()) {
+      <li class="nav-username">
+        <p>User:</p>
+        <h4>{{ user()?.name }}</h4>
+      </li>
+    }
+
+    @for (option of accountOptions(); track option.name) {
+      @if (option.visible) {
+        <li>
+          <button mat-button [routerLink]="option.link" (click)="option.action?.()">
+            {{ option.name }}
+          </button>
+        </li>
+      }
+    }
+  </ul>
+</div>
