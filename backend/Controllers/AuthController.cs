@@ -33,7 +33,7 @@ public class AuthController(IConfiguration config, IUserRepository repo) : Contr
             return Unauthorized("Invalid credentials");
 
         var token = GenerateJwt(user);
-        return Ok(new AuthResponseDto { Token = token , Name = dto.Username });
+        return Ok(new AuthResponseDto { Token = token, Name = dto.Username });
 
     }
 
@@ -67,4 +67,9 @@ public class AuthController(IConfiguration config, IUserRepository repo) : Contr
         return Ok(new AuthResponseDto { Name = username });
     }
 
+    [HttpGet("ping")]
+    public IActionResult Ping()
+    {
+        return Ok("pong");
+    }
 }

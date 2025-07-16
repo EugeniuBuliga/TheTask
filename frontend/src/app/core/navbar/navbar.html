@@ -1,4 +1,13 @@
 <div class="nav-body">
+  <h1>TheTask</h1>
+
+  <div class="status-wrapper">
+    <div class="health-indicator" [ngClass]="status()"></div>
+    <span class="status-label">{{ status() }}</span>
+  </div>
+
+
+  <div class="nav-auth">
   <ul>
     @if (isLoggedIn()) {
       <li class="nav-username">
@@ -17,4 +26,5 @@
       }
     }
   </ul>
+</div>
 </div>

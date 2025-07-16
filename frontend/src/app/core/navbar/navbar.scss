@@ -13,9 +13,6 @@ nav {
 
 .nav-body{
   text-align: center;
-}
-
-ul {
   display: flex;
   text-decoration: none;
   list-style: none;
@@ -23,13 +20,26 @@ ul {
   padding: 10px;
   margin-block: 0;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
   background: linear-gradient(to left, #ffffff, #2a5298);
+  height: 50px;
+  align-items:center;
+}
+
+ul {
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  padding: 10px;
   height: 50px;
 }
 
 li{
   margin-top: 6px;
+}
+
+h1{
+  color: #ffffff;
 }
 
 .nav-username{
@@ -39,4 +49,46 @@ li{
   border-bottom: 1px solid var(--teal40);
   align-items: center;
   padding-right: 32px;
+}
+
+.health-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-left: 1rem;
+  display: inline-block;
+
+  &.loading {
+    background-color: yellow;
+  }
+
+  &.online {
+    background-color: green;
+  }
+
+  &.offline {
+    background-color: red;
+  }
+}
+
+.status-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.health-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+  &.loading { background-color: gray; }
+  &.online { background-color: green; }
+  &.offline { background-color: red; }
+}
+
+.status-label {
+  text-transform: capitalize;
+  font-weight: 500;
 }
